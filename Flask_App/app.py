@@ -42,5 +42,14 @@ def get_data():
     except Exception as e:
         return jsonify({"error": str(e)})
 
+@app.route('/submittodoitem',methods=['GET','POST'])
+def submit_todo():
+    data=request.form.to_dict()
+    try:
+        collection.insert_one(data)
+        return render_template('todo.html')
+    except Exception as e:
+        return render_template('todo.html', error=str(e))
+
 if __name__ == '__main__':
     app.run(debug=True)
