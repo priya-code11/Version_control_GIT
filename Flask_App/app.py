@@ -20,10 +20,10 @@ collection = db['User_info']
 def home():
     return "Get data from /api endpoint to see the date and time. /get_data to retrieve all submitted data."
 
-@app.route('/api/<name>/<int:age>')
-def show_data(name, age):
+@app.route('/api/<name>/<int:age>/<dep>')
+def show_data(name, age, dep):
     date=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return render_template('index.html', date=date , name=name, age=age)
+    return render_template('index.html', date=date , name=name, age=age , dep=dep)
 
 @app.route('/submit', methods=['POST'])
 def submit_form():
