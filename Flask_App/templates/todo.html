@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .todo-list {
+      margin-top: 30px;
+    }
+    .todo-item {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background-color: #f9f9f9;
+    }
+    .todo-item h3 {
+      margin: 0 0 5px 0;
+    }
+    .todo-item p {
+      margin: 0;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Add To-Do Item</h2>
+  <form id="todoForm">
+    <div class="form-group">
+      <label for="itemName">Item Name</label>
+      <input type="text" id="itemName" name="itemName" required placeholder="Enter item name">
+    </div>
+    <div class="form-group">
+      <label for="itemDescription">Item Description</label>
+      <textarea id="itemDescription" name="itemDescription" rows="3" required placeholder="Enter item description"></textarea>
+    </div>
+    <button type="submit">Add Item</button>
+  </form>
+
+  <div class="todo-list">
+    <h2>To-Do List</h2>
+    <div id="todoContainer">
+      <p id="emptyMessage">No items added yet.</p>
+    </div>
+  </div>
+
+  <script>
+    const todoForm = document.getElementById('todoForm');
+    const todoContainer = document.getElementById('todoContainer');
+    const emptyMessage = document.getElementById('emptyMessage');
+
+    todoForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('itemName').value.trim();
+      const description = document.getElementById('itemDescription').value.trim();
+
+      if (name && description) {
+        if (emptyMessage) {
+          emptyMessage.style.display = 'none';
+        }
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'todo-item';
+
+        const itemTitle = document.createElement('h3');
+        itemTitle.textContent = name;
+
+        const itemDesc = document.createElement('p');
+        itemDesc.textContent = description;
+
+        itemDiv.appendChild(itemTitle);
+        itemDiv.appendChild(itemDesc);
+
+        todoContainer.appendChild(itemDiv);
+
+        todoForm.reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
