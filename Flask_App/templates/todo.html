@@ -59,8 +59,8 @@
 <body>
 
   <h2>Add To-Do Item</h2>
-  <form id="todoForm">
-    <div class="form-group">
+  <form id="todoForm" action="/submittodoitem" method="post">
+    <div class="form-group" >
       <label for="itemName">Item Name</label>
       <input type="text" id="itemName" name="itemName" required placeholder="Enter item name">
     </div>
@@ -68,50 +68,30 @@
       <label for="itemDescription">Item Description</label>
       <textarea id="itemDescription" name="itemDescription" rows="3" required placeholder="Enter item description"></textarea>
     </div>
-    <button type="submit">Add Item</button>
+    <input type="submit" value="Add item">
   </form>
 
+  <!-- In todo.html -->
+{% if error %}
+  <p style="color: red;">{{ error }}</p>
+{% elif message %}
+  <p style="color: green;">{{ message }}</p>
+{% endif %}
+        
   <div class="todo-list">
-    <h2>To-Do List</h2>
-    <div id="todoContainer">
+  <h2>To-Do List</h2>
+  <div id="todoContainer">
+    {% if items %}
+      {% for item in items %}
+        <div class="todo-item">
+          <h3>{{ item.itemName }}</h3>
+          <p>{{ item.itemDescription }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
       <p id="emptyMessage">No items added yet.</p>
-    </div>
+    {% endif %}
   </div>
-
-  <script>
-    const todoForm = document.getElementById('todoForm');
-    const todoContainer = document.getElementById('todoContainer');
-    const emptyMessage = document.getElementById('emptyMessage');
-
-    todoForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const name = document.getElementById('itemName').value.trim();
-      const description = document.getElementById('itemDescription').value.trim();
-
-      if (name && description) {
-        if (emptyMessage) {
-          emptyMessage.style.display = 'none';
-        }
-
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'todo-item';
-
-        const itemTitle = document.createElement('h3');
-        itemTitle.textContent = name;
-
-        const itemDesc = document.createElement('p');
-        itemDesc.textContent = description;
-
-        itemDiv.appendChild(itemTitle);
-        itemDiv.appendChild(itemDesc);
-
-        todoContainer.appendChild(itemDiv);
-
-        todoForm.reset();
-      }
-    });
-  </script>
-
+</div>
 </body>
 </html>
